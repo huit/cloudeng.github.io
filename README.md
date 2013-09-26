@@ -1,4 +1,0 @@
-cloudeng
-========
-
-HUIT Cloud Engineering
