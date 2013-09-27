@@ -1,11 +1,11 @@
 
-http://username.github.io/archive.html
-http://username.github.io/atom.xml
-http://username.github.io/categories.html
-http://username.github.io/index.html
-http://username.github.io/pages.html
-http://username.github.io/rss.xml
-http://username.github.io/sitemap.txt
-http://username.github.io/tags.html
+http://huit.github.io/cloudeng.github.io/archive.html
+http://huit.github.io/cloudeng.github.io/atom.xml
+http://huit.github.io/cloudeng.github.io/categories.html
+http://huit.github.io/cloudeng.github.io/index.html
+http://huit.github.io/cloudeng.github.io/pages.html
+http://huit.github.io/cloudeng.github.io/rss.xml
+http://huit.github.io/cloudeng.github.io/sitemap.txt
+http://huit.github.io/cloudeng.github.io/tags.html
 
-http://username.github.io/lessons/2011/12/29/jekyll-introduction
+http://huit.github.io/cloudeng.github.io/lessons/2011/12/29/jekyll-introduction
