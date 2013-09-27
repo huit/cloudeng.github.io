@@ -4,13 +4,21 @@
  <title>HUIT Cloud Engineering</title>
  <link href="http://huit.github.io/cloudeng.github.io/" rel="self"/>
  <link href="http://huit.github.io/cloudeng.github.io"/>
- <updated>2013-09-27T12:57:46-04:00</updated>
+ <updated>2013-09-27T14:20:01-04:00</updated>
  <id>http://huit.github.io/cloudeng.github.io</id>
  <author>
    <name>HUIT Cloud Engineering</name>
    <email>nephoeng@harvard.edu</email>
  </author>
 
+ 
+ <entry>
+   <title>Hello World</title>
+   <link href="http://huit.github.io/cloudeng.github.io/2013/09/27/hello-world"/>
+   <updated>2013-09-27T00:00:00-04:00</updated>
+   <id>http://huit.github.io/cloudeng.github.io/2013/09/27/hello-world</id>
+   <content type="html">&lt;p&gt;So this is my first post! @tfhartmann&lt;/p&gt;</content>
+ </entry>
  
  
 </feed>

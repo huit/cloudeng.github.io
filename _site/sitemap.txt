@@ -7,3 +7,5 @@ http://huit.github.io/cloudeng.github.io/pages.html
 http://huit.github.io/cloudeng.github.io/rss.xml
 http://huit.github.io/cloudeng.github.io/sitemap.txt
 http://huit.github.io/cloudeng.github.io/tags.html
+
+http://huit.github.io/cloudeng.github.io/2013/09/27/hello-world

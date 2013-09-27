@@ -5,10 +5,18 @@
         <description>HUIT Cloud Engineering - HUIT Cloud Engineering</description>
         <link>http://huit.github.io/cloudeng.github.io</link>
         <link>http://huit.github.io/cloudeng.github.io</link>
-        <lastBuildDate>2013-09-27T12:57:46-04:00</lastBuildDate>
-        <pubDate>2013-09-27T12:57:46-04:00</pubDate>
+        <lastBuildDate>2013-09-27T14:20:01-04:00</lastBuildDate>
+        <pubDate>2013-09-27T14:20:01-04:00</pubDate>
         <ttl>1800</ttl>
 
+
+        <item>
+                <title>Hello World</title>
+                <description>&lt;p&gt;So this is my first post! @tfhartmann&lt;/p&gt;</description>
+                <link>http://huit.github.io/cloudeng.github.io/2013/09/27/hello-world</link>
+                <guid>http://huit.github.io/cloudeng.github.io/2013/09/27/hello-world</guid>
+                <pubDate>2013-09-27T00:00:00-04:00</pubDate>
+        </item>
 
 
 </channel>
