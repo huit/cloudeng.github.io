@@ -3,18 +3,18 @@
 <channel>
         <title>HUIT Cloud Engineering</title>
         <description>HUIT Cloud Engineering - HUIT Cloud Engineering</description>
-        <link>http://huit.github.io/cloudeng.github.io</link>
-        <link>http://huit.github.io/cloudeng.github.io</link>
-        <lastBuildDate>2013-09-27T14:20:01-04:00</lastBuildDate>
-        <pubDate>2013-09-27T14:20:01-04:00</pubDate>
+        <link>http://cloudhacks.huit.harvard.edu</link>
+        <link>http://cloudhacks.huit.harvard.edu</link>
+        <lastBuildDate>2013-10-21T10:01:50-04:00</lastBuildDate>
+        <pubDate>2013-10-21T10:01:50-04:00</pubDate>
         <ttl>1800</ttl>
 
 
         <item>
                 <title>Hello World</title>
-                <description>&lt;p&gt;So this is my first post! @tfhartmann&lt;/p&gt;</description>
-                <link>http://huit.github.io/cloudeng.github.io/2013/09/27/hello-world</link>
-                <guid>http://huit.github.io/cloudeng.github.io/2013/09/27/hello-world</guid>
+                <description>&lt;p&gt;So this is my first post! @tfhartmann Edit&lt;/p&gt;</description>
+                <link>http://cloudhacks.huit.harvard.edu/2013/09/27/hello-world.html</link>
+                <guid>http://cloudhacks.huit.harvard.edu/2013/09/27/hello-world</guid>
                 <pubDate>2013-09-27T00:00:00-04:00</pubDate>
         </item>
 

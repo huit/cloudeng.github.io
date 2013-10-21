@@ -1,11 +1,11 @@
 
-http://huit.github.io/cloudeng.github.io/archive.html
-http://huit.github.io/cloudeng.github.io/atom.xml
-http://huit.github.io/cloudeng.github.io/categories.html
-http://huit.github.io/cloudeng.github.io/index.html
-http://huit.github.io/cloudeng.github.io/pages.html
-http://huit.github.io/cloudeng.github.io/rss.xml
-http://huit.github.io/cloudeng.github.io/sitemap.txt
-http://huit.github.io/cloudeng.github.io/tags.html
+http://cloudhacks.huit.harvard.edu/archive.html
+http://cloudhacks.huit.harvard.edu/atom.xml
+http://cloudhacks.huit.harvard.edu/categories.html
+http://cloudhacks.huit.harvard.edu/index.html
+http://cloudhacks.huit.harvard.edu/pages.html
+http://cloudhacks.huit.harvard.edu/rss.xml
+http://cloudhacks.huit.harvard.edu/sitemap.txt
+http://cloudhacks.huit.harvard.edu/tags.html
 
-http://huit.github.io/cloudeng.github.io/2013/09/27/hello-world
+http://cloudhacks.huit.harvard.edu/2013/09/27/hello-world.html
