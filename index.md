@@ -6,9 +6,9 @@ tagline: Supporting tagline
 {% include JB/setup %}
 </br>
 <div class="blog-index">  
-  {% assign post = site.posts.first %}
-  {% assign content = post.content %}
-  {% include post_detail.html %}
+{% assign post = site.posts.first %}
+{% assign content = post.content %}
+{% include post_detail.html %}
 </div>
 
 <ul class="posts">

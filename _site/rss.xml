@@ -5,14 +5,246 @@
         <description>HUIT Cloud Engineering - HUIT Cloud Engineering</description>
         <link>http://cloudhacks.huit.harvard.edu</link>
         <link>http://cloudhacks.huit.harvard.edu</link>
-        <lastBuildDate>2013-10-21T10:01:50-04:00</lastBuildDate>
-        <pubDate>2013-10-21T10:01:50-04:00</pubDate>
+        <lastBuildDate>2013-10-22T17:22:36-04:00</lastBuildDate>
+        <pubDate>2013-10-22T17:22:36-04:00</pubDate>
         <ttl>1800</ttl>
 
 
         <item>
+                <title>How I made this Blog</title>
+                <description>&lt;h2 id=&quot;toc_0&quot;&gt;How I made this Blog - A Drama in Many Parts.&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;#The%20Quick%20and%20Dirty&quot;&gt;The Quick and Dirty&lt;/a&gt;
+ &lt;a href=&quot;#Install%20s3_website&quot;&gt;Install s3_website&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This post may get a little long and ramble a bit, so let me skip directly to the payoff - quick and easy content managment on crazy robust and reliable infrastructure. Here&amp;#39;s the commands I need to add and post new content:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vim _posts/2013-09-27-hello-world.md 
+
+ &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jekyll serve 
+
+&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;s3_website push
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;and Behold - The power of S3 and CloudFront!  &lt;/p&gt;
+
+&lt;h1 id=&quot;toc_1&quot;&gt;&lt;/h1&gt;
+
+&lt;h3 id=&quot;toc_2&quot;&gt;The Quick and Dirty&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Make sure you have a new-ish version of ruby, if not, install &lt;a href=&quot;https://github.com/sstephenson/rbenv#homebrew-on-mac-os-x&quot;&gt;rbenv&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Install or configure Jekyll ( I used Jekyll bootstrap to start with since I&amp;#39;m new to it )&lt;/li&gt;
+&lt;li&gt;Install &lt;a href=&quot;https://github.com/laurilehmijoki/s3_website&quot;&gt;s3_website&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Configure &lt;em&gt;config.yml and s3&lt;/em&gt;website.yml&lt;/li&gt;
+&lt;li&gt;Create Your first post under _posts&lt;/li&gt;
+&lt;li&gt;Check to see if your site works locally by running -  jekyll serve&lt;/li&gt;
+&lt;li&gt;Create your AWS &lt;strong&gt;Stuff&lt;/strong&gt;                          - s3_website cfg apply&lt;/li&gt;
+&lt;li&gt;Point a CNAME at your CloudFront bucket&lt;/li&gt;
+&lt;li&gt;Publish your Site to your s3 bucket                - s3_website push&lt;/li&gt;
+&lt;li&gt;Repeat steps 5,6 and 9 for fun and profit!&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;toc_3&quot;&gt;&lt;/h1&gt;
+
+&lt;h3 id=&quot;toc_4&quot;&gt;Install s3_website&lt;/h3&gt;
+
+&lt;p&gt;on my shiny new Mac, I wasn&amp;#39;t able to install s3_website due to failed dependency&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/laurilehmijoki/s3_website&quot;&gt;https://github.com/laurilehmijoki/s3_website&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;alaric@dhcp-128-103-209-223 splunk-searches&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gem install -b s3_website
+ERROR:  While executing gem ... &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Gem::FilePermissionError&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    You don&lt;span class=&quot;err&quot;&gt;&amp;#39;&lt;/span&gt;t have write permissions into the /Library/Ruby/Gems/1.8 directory.
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;alaric@dhcp-128-103-209-223 splunk-searches&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;sudo gem install -b s3_website
+Password:
+ERROR:  Error installing s3_website:
+  nokogiri requires Ruby version &amp;gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 1.9.2.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;However thanks to brew I was able to use a newer version of Ruby and get it installed!&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;brew install ruby
+
+
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;alaric@preator ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;sudo gem install -b s3_website
+Password:
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After proving that I know nothing about Ruby paths.. @hakamadare turned me on to &lt;a href=&quot;https://github.com/sstephenson/rbenv#homebrew-on-mac-os-x&quot;&gt;rbenv&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;alaric@vpn-209-21 ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;brew install &lt;span class=&quot;nv&quot;&gt;rbenv&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&amp;gt; Downloading https://github.com/sstephenson/rbenv/archive/v0.4.0.tar.gz
+&lt;span class=&quot;c&quot;&gt;######################################################################## 100.0%&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&amp;gt; Caveats
+To use Homebrew&lt;span class=&quot;err&quot;&gt;&amp;#39;&lt;/span&gt;s directories rather than ~/.rbenv add to your profile:
+  &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RBENV_ROOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/var/rbenv
+
+To &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;shims and autocompletion add to your profile:
+  &lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;which rbenv &amp;gt; /dev/null; &lt;span class=&quot;k&quot;&gt;then &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$(rbenv init -)&amp;quot;&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&amp;gt; Summary
+🍺  /usr/local/Cellar/rbenv/0.4.0: 31 files, 152K, built in 2 seconds
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;alaric@vpn-209-21 ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;brew install ruby-build
+&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&amp;gt; Installing dependencies &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;ruby-build: &lt;span class=&quot;nv&quot;&gt;autoconf&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&amp;gt; Installing ruby-build dependency: &lt;span class=&quot;nv&quot;&gt;autoconf&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&amp;gt; Downloading http://ftpmirror.gnu.org/autoconf/autoconf-2.69.tar.gz
+&lt;span class=&quot;c&quot;&gt;######################################################################## 100.0%&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&amp;gt; ./configure --prefix&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/Cellar/autoconf/2.69
+&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&amp;gt; make install
+🍺  /usr/local/Cellar/autoconf/2.69: 69 files, 2.0M, built in 22 &lt;span class=&quot;nv&quot;&gt;seconds&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&amp;gt; Installing ruby-build
+&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&amp;gt; Downloading https://github.com/sstephenson/ruby-build/archive/v20130923.tar.gz
+&lt;span class=&quot;c&quot;&gt;######################################################################## 100.0%&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&amp;gt; ./install.sh
+🍺  /usr/local/Cellar/ruby-build/20130923: 84 files, 372K, built in 2 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And in my case, I had to source my .bash_profile again after switching ruby versions with rbenv, (So for those keeping score, three (ahhahah) versions of ruby now)  to get the gem to show up in my path (two versions of s3_website..)&lt;/p&gt;
+
+&lt;p&gt;source .bash_profile&lt;/p&gt;
+
+&lt;p&gt;AWS Creds&lt;/p&gt;
+
+&lt;p&gt;Since we are all agile and stuff, multiple people will be updating the blog - so I didn&amp;#39;t want to put AWS credentials into the repo itself.. plus we &lt;em&gt;are&lt;/em&gt; publishing them on github, so I thought i&amp;#39;d source them from ENV variables as per the instructions on the s3_website docs... but I source in my AWS Creds this way in my bash_profile file&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;AWS_CONFIG_FILE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;~/aws_creds.txt 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;AND! --- FAIL! &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;alaric@preator cloudeng.github.io&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;s3_website cfg apply
+Applying the configurations in s3_website.yml on the AWS services ...
+/Users/alaric/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/configure-s3-website-1.4.0/lib/configure-s3-website/http_helper.rb:62:in &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;digest&lt;span class=&quot;s1&quot;&gt;&amp;#39;: no implicit conversion of nil into String (TypeError)&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;from /Users/alaric/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/configure-s3-website-1.4.0/lib/configure-s3-website/http_helper.rb:62:in `create_s3_digest&amp;#39;&lt;/span&gt;
+from /Users/alaric/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/configure-s3-website-1.4.0/lib/configure-s3-website/http_helper.rb:6:in &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;call_s3_api&lt;span class=&quot;s1&quot;&gt;&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;from /Users/alaric/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/configure-s3-website-1.4.0/lib/configure-s3-website/s3_client.rb:34:in `enable_website_configuration&amp;#39;&lt;/span&gt;
+from /Users/alaric/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/configure-s3-website-1.4.0/lib/configure-s3-website/s3_client.rb:12:in &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;configure_website&lt;span class=&quot;s1&quot;&gt;&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;from /Users/alaric/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/configure-s3-website-1.4.0/lib/configure-s3-website/runner.rb:4:in `run&amp;#39;&lt;/span&gt;
+from /Users/alaric/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/configure-s3-website-1.4.0/bin/configure-s3-website:12:in &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&amp;lt;top &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;required&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&amp;gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;from /Users/alaric/.rbenv/versions/2.0.0-p247/bin/configure-s3-website:23:in `load&amp;#39;&lt;/span&gt;
+from /Users/alaric/.rbenv/versions/2.0.0-p247/bin/configure-s3-website:23:in &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&amp;lt;main&amp;gt;&lt;span class=&quot;err&quot;&gt;&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;alaric@preator cloudeng.github.io&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;But thats ok, it&amp;#39;s a quick hack! &lt;/p&gt;
+
+&lt;p&gt;EPIC FAIL AGAIN!!! &lt;/p&gt;
+
+&lt;p&gt;Why? Because sometime I assume I&amp;#39;m smarting then the instructions.... and am mostly wrong. the envirment variables they want you to use are&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;S3_ID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;ID&amp;gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;S3_SECRET&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;SECRET&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;NOT aws_access_key_id, and aws_secret_access_key which I, having read the AWS docs (ok, skimmed) tried first! &lt;/p&gt;
+
+&lt;p&gt;=== AND THEN! ===&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;alaric@preator cloudeng.github.io&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;s3_website cfg apply
+Applying the configurations in s3_website.yml on the AWS services ...
+Created bucket cloudhacks.huit.harvard.edu in the US Standard Region
+Bucket cloudhacks.huit.harvard.edu now functions as a website
+Bucket cloudhacks.huit.harvard.edu is now readable to the whole world
+No redirects to configure &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;cloudhacks.huit.harvard.edu bucket
+Do you want to deliver your website via CloudFront, the CDN of Amazon? &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;y/N&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; n
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;and BAM!! a freaking awesome bucket! &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;alaric@preator cloudeng.github.io&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;s3_website push
+Deploying _site/* to cloudhacks.huit.harvard.edu
+Calculating diff ... &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
+Uploading 19 new file&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Upload archive.html: Success!
+Upload 404.html: Success!
+Upload 2013/09/27/hello-world/index.html: Success!
+Upload assets/themes/tom/css/screen.css: Success!
+Upload assets/themes/tom/images/rss.png: Success!
+Upload assets/themes/tom/css/syntax.css: Success!
+Upload assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css: Success!
+Upload assets/themes/twitter/bootstrap/img/glyphicons-halflings-white.png: Success!
+Upload assets/themes/twitter/bootstrap/img/glyphicons-halflings.png: Success!
+Upload categories.html: Success!
+Upload atom.xml: Success!
+Upload assets/themes/twitter/css/style.css: Success!
+Upload Genfile: Success!
+Upload index.html: Success!
+Upload History.markdown: Success!
+Upload pages.html: Success!
+Upload rss.xml: Success!
+Upload sitemap.txt: Success!
+Upload tags.html: Success!
+Done! Go visit: http://cloudhacks.huit.harvard.edu.s3-website-us-east-1.amazonaws.com/index.html
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;OK - that was pretty sweet... but I can totall do that on my own... it&amp;#39;s just s3 right??  Lets CDN this bad larry! - So I&amp;#39;ll run s3_website cfg apply again and see what happens!! &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;alaric@preator cloudeng.github.io&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;s3_website cfg apply
+Applying the configurations in s3_website.yml on the AWS services ...
+Bucket cloudhacks.huit.harvard.edu now functions as a website
+Bucket cloudhacks.huit.harvard.edu is now readable to the whole world
+No redirects to configure &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;cloudhacks.huit.harvard.edu bucket
+Do you want to deliver your website via CloudFront, the CDN of Amazon? &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;y/N&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+y
+  The distribution E2KIUNT4276WHO at d99xfp4zz9wie.cloudfront.net now delivers the bucket cloudhacks.huit.harvard.edu
+    Please allow up to 15 minutes &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;the distribution to initialise
+    For more information on the distribution, see https://console.aws.amazon.com/cloudfront
+  Added setting &lt;span class=&quot;s1&quot;&gt;&amp;#39;cloudfront_distribution_id: E2KIUNT4276WHO&amp;#39;&lt;/span&gt; into s3_website.yml
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;alaric@preator cloudeng.github.io&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;jobs&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;1&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;+  Stopped                 vim _config.yml
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;2&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;-  Stopped                 vim s3_website.yml
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;alaric@preator cloudeng.github.io&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;fg &lt;/span&gt;2
+vim s3_website.yml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now I have d99xfp4zz9wie.cloudfront.net as a target for our awesome blog! I was totally ready for my sweet sweet vicotry! &lt;/p&gt;
+
+&lt;p&gt;So All I needed to do now was to create the CNAME in DNS with our DNS Admin tool! Click-Click Click... and &lt;/p&gt;
+
+&lt;p&gt;BAAA-- wait... --- no BAM??!&lt;/p&gt;
+
+&lt;p&gt;I get this??!!&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h2 id=&quot;toc_5&quot;&gt;ERROR&lt;/h2&gt;
+
+&lt;p&gt;The request could not be satisfied.
+Generated by cloudfront (CloudFront)&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;OK- Back to reading the &lt;a href=&quot;http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html&quot;&gt;AWS CloudFront Docs&lt;/a&gt; and apprently I need to add an alternate domain name to the CloudFront Config, Luckly s3_website lets me do that with just a bit of editing to the config file! &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;yaml language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;l-Scalar-Plain&quot;&gt;cloudfront_distribution_config&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
+   &lt;span class=&quot;l-Scalar-Plain&quot;&gt;aliases&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
+     &lt;span class=&quot;l-Scalar-Plain&quot;&gt;quantity&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;1&lt;/span&gt;
+     &lt;span class=&quot;l-Scalar-Plain&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
+       &lt;span class=&quot;l-Scalar-Plain&quot;&gt;CNAME&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;cloudhacks.huit.harvard.edu&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After updating the config, I gave s3_website another spin - &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;alaric@preator cloudeng.github.io&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;s3_website cfg apply
+Applying the configurations in s3_website.yml on the AWS services ...
+Bucket cloudhacks.huit.harvard.edu now functions as a website
+Bucket cloudhacks.huit.harvard.edu is now readable to the whole world
+No redirects to configure &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;cloudhacks.huit.harvard.edu bucket
+Detected an existing CloudFront distribution &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;id E2KIUNT4276WHO&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; ...
+  Applied custom distribution settings:
+    aliases:
+      quantity: 1
+      items:
+        CNAME: cloudhacks.huit.harvard.edu
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In the AWS Console, I can see my new Domain added, and the distribution is listed as &amp;quot;In Progress&amp;quot; &lt;/p&gt;
+
+&lt;p&gt;And with that - after waiting about 10 minutes for the content to update, I got my much anticipated &amp;quot;BAM!&amp;quot; and vicotry dance! Welcome to the &lt;a href=&quot;http://cloudhacks.huit.harvard.edu/&quot;&gt;Cloud Hacks blog!&lt;/a&gt; &lt;/p&gt;
+
+&lt;p&gt;To Push Posts we just use the s3_website push command!&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;Deploying _site/* to cloudhacks.huit.harvard.edu
+Calculating diff ... &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
+No new or changed files to upload
+Done! Go visit: http://cloudhacks.huit.harvard.edu.s3-website-us-east-1.amazonaws.com/index.html
+Invalidating Cloudfront items...
+  /
+succeeded
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After All that, I thought I was golden, however I couldn&amp;#39;t for the life of me get links working! &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# This is the default format. &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# For more see: http://jekyllrb.com/docs/permalinks/&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#permalink: /:categories/:year/:month/:day/:title &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The End&lt;/p&gt;
+</description>
+                <link>http://cloudhacks.huit.harvard.edu/2013/10/21/how-i-made-this-blog.html</link>
+                <guid>http://cloudhacks.huit.harvard.edu/2013/10/21/how-i-made-this-blog</guid>
+                <pubDate>2013-10-21T00:00:00-04:00</pubDate>
+        </item>
+
+        <item>
                 <title>Hello World</title>
-                <description>&lt;p&gt;So this is my first post! @tfhartmann Edit&lt;/p&gt;</description>
+                <description>&lt;p&gt;So this is my first post!&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/tfhartmann&quot;&gt;@tfhartmann&lt;/a&gt;&lt;/p&gt;
+</description>
                 <link>http://cloudhacks.huit.harvard.edu/2013/09/27/hello-world.html</link>
                 <guid>http://cloudhacks.huit.harvard.edu/2013/09/27/hello-world</guid>
                 <pubDate>2013-09-27T00:00:00-04:00</pubDate>
