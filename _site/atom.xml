@@ -4,7 +4,7 @@
  <title>HUIT Cloud Engineering</title>
  <link href="http://cloudhacks.huit.harvard.edu/" rel="self"/>
  <link href="http://cloudhacks.huit.harvard.edu"/>
- <updated>2013-10-24T11:16:15-04:00</updated>
+ <updated>2013-10-24T11:21:03-04:00</updated>
  <id>http://cloudhacks.huit.harvard.edu</id>
  <author>
    <name>HUIT Cloud Engineering</name>
@@ -62,6 +62,8 @@ Creating new post: ./_posts/2013-10-24-how-to-create-a-post.md
 &lt;/ol&gt;
 
 &lt;p&gt;That should be about it! &lt;/p&gt;
+
+&lt;p&gt;-Tim&lt;/p&gt;
 </content>
  </entry>
  
