@@ -5,10 +5,23 @@
         <description>HUIT Cloud Engineering - HUIT Cloud Engineering</description>
         <link>http://cloudhacks.huit.harvard.edu</link>
         <link>http://cloudhacks.huit.harvard.edu</link>
-        <lastBuildDate>2013-10-23T23:51:42-04:00</lastBuildDate>
-        <pubDate>2013-10-23T23:51:42-04:00</pubDate>
+        <lastBuildDate>2013-10-24T09:55:22-04:00</lastBuildDate>
+        <pubDate>2013-10-24T09:55:22-04:00</pubDate>
         <ttl>1800</ttl>
 
+
+        <item>
+                <title>OpenStack Meetup   Whats new in Havana</title>
+                <description>&lt;p&gt;Last Night I went to the &lt;a href=&quot;http://www.meetup.com/Openstack-Boston/events/144295382/&quot;&gt;Openstack Boston meetup&lt;/a&gt; and had a great time! The presenters and organizers did a great job!  I figured I&amp;#39;d post my -very- raw notes from the meetup! &lt;/p&gt;
+
+&lt;p&gt;-Tim&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/7137760.js&quot;&gt; &lt;/script&gt;
+</description>
+                <link>http://cloudhacks.huit.harvard.edu/openstack/2013/10/24/openstack-meetup---whats-new-in-havana.html</link>
+                <guid>http://cloudhacks.huit.harvard.edu/openstack/2013/10/24/openstack-meetup---whats-new-in-havana</guid>
+                <pubDate>2013-10-24T00:00:00-04:00</pubDate>
+        </item>
 
         <item>
                 <title>How I made this Blog</title>

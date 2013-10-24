@@ -15,5 +15,6 @@ http://cloudhacks.huit.harvard.edu/sitemap.txt
 http://cloudhacks.huit.harvard.edu/tags.html
 http://cloudhacks.huit.harvard.edu/the-big-board.html
 
+http://cloudhacks.huit.harvard.edu/openstack/2013/10/24/openstack-meetup---whats-new-in-havana.html
 http://cloudhacks.huit.harvard.edu/2013/10/21/how-i-made-this-blog.html
 http://cloudhacks.huit.harvard.edu/2013/09/27/hello-world.html
