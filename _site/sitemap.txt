@@ -1,9 +1,15 @@
 
+http://cloudhacks.huit.harvard.edu/about/agperson.html
+http://cloudhacks.huit.harvard.edu/about/hakamadare.html
+http://cloudhacks.huit.harvard.edu/about/robparrott.html
+http://cloudhacks.huit.harvard.edu/about/tfhartmann.html
+http://cloudhacks.huit.harvard.edu/about.html
 http://cloudhacks.huit.harvard.edu/archive.html
 http://cloudhacks.huit.harvard.edu/atom.xml
 http://cloudhacks.huit.harvard.edu/categories.html
 http://cloudhacks.huit.harvard.edu/index.html
 http://cloudhacks.huit.harvard.edu/pages.html
+http://cloudhacks.huit.harvard.edu/projects.html
 http://cloudhacks.huit.harvard.edu/rss.xml
 http://cloudhacks.huit.harvard.edu/sitemap.txt
 http://cloudhacks.huit.harvard.edu/tags.html
