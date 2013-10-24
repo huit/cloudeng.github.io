@@ -3,7 +3,7 @@ layout: post
 title: "How to Create a Post"
 description: ""
 category: "howto"
-tags: [tfhartmann howto]
+tags: [tfhartmann, howto]
 ---
 {% include JB/setup %}
 
