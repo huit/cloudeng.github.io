@@ -4,7 +4,7 @@
  <title>HUIT Cloud Engineering</title>
  <link href="http://cloudhacks.huit.harvard.edu/" rel="self"/>
  <link href="http://cloudhacks.huit.harvard.edu"/>
- <updated>2013-10-24T11:21:03-04:00</updated>
+ <updated>2013-10-28T09:01:01-04:00</updated>
  <id>http://cloudhacks.huit.harvard.edu</id>
  <author>
    <name>HUIT Cloud Engineering</name>
@@ -19,7 +19,7 @@
    <id>http://cloudhacks.huit.harvard.edu/openstack/2013/10/24/openstack-meetup---whats-new-in-havana</id>
    <content type="html">&lt;p&gt;Last Night I went to the &lt;a href=&quot;http://www.meetup.com/Openstack-Boston/events/144295382/&quot;&gt;Openstack Boston meetup&lt;/a&gt; and had a great time! The presenters and organizers did a great job!  I figured I&amp;#39;d post my -very- raw notes from the meetup! &lt;/p&gt;
 
-&lt;p&gt;-Tim&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/tfhartmann&quot;&gt;@tfhartmann&lt;/a&gt;&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/7137760.js&quot;&gt; &lt;/script&gt;
 </content>
@@ -63,7 +63,7 @@ Creating new post: ./_posts/2013-10-24-how-to-create-a-post.md
 
 &lt;p&gt;That should be about it! &lt;/p&gt;
 
-&lt;p&gt;-Tim&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/tfhartmann&quot;&gt;@tfhartmann&lt;/a&gt;&lt;/p&gt;
 </content>
  </entry>
  
@@ -293,6 +293,8 @@ succeeded
 &lt;span class=&quot;c&quot;&gt;#permalink: /:categories/:year/:month/:day/:title &lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The End&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/tfhartmann&quot;&gt;@tfhartmann&lt;/a&gt;&lt;/p&gt;
 </content>
  </entry>
  

@@ -9,6 +9,6 @@ tags: [tfhartmann, openstack]
 
 Last Night I went to the [Openstack Boston meetup](http://www.meetup.com/Openstack-Boston/events/144295382/) and had a great time! The presenters and organizers did a great job!  I figured I'd post my -very- raw notes from the meetup! 
 
--Tim
+[@tfhartmann](https://github.com/tfhartmann)
 
 {% gist 7137760 %}

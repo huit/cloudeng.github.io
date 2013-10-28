@@ -35,5 +35,4 @@ Creating new post: ./_posts/2013-10-24-how-to-create-a-post.md
 
 That should be about it! 
 
--Tim
-
+[@tfhartmann](https://github.com/tfhartmann)
