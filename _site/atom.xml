@@ -4,13 +4,65 @@
  <title>HUIT Cloud Engineering</title>
  <link href="http://cloudhacks.huit.harvard.edu/" rel="self"/>
  <link href="http://cloudhacks.huit.harvard.edu"/>
- <updated>2013-10-28T10:57:45-04:00</updated>
+ <updated>2013-11-01T15:31:21-04:00</updated>
  <id>http://cloudhacks.huit.harvard.edu</id>
  <author>
    <name>HUIT Cloud Engineering</name>
    <email>nephoeng@harvard.edu</email>
  </author>
 
+ 
+ <entry>
+   <title>Developing Cloudlets</title>
+   <link href="http://cloudhacks.huit.harvard.edu/hacking/2013/10/29/developing-cloudlets.html"/>
+   <updated>2013-10-29T00:00:00-04:00</updated>
+   <id>http://cloudhacks.huit.harvard.edu/hacking/2013/10/29/developing-cloudlets</id>
+   <content type="html">&lt;p&gt;So, in our attempts to develop cloudlets (packages for &lt;a href=&quot;https://github.com/huit/nepho&quot;&gt;Nepho&lt;/a&gt;) in some sort of reasonable fashion, we recommend a Git workflow that looks something like this:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Fork the &lt;a href=&quot;https://github.com/cloudlets/nepho-example&quot;&gt;example cloudlet&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Rename your fork to something less generic, and check it out.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;$ git clone https://github.com/cloudlets/nepho-railsapp.git
+Cloning into &amp;#39;nepho-railsapp&amp;#39;...
+remote: Counting objects: 78, done.
+remote: Compressing objects: 100% (46/46), done.
+remote: Total 78 (delta 16), reused 74 (delta 12)
+Unpacking objects: 100% (78/78), done.
+Checking connectivity... done
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Add a &lt;code&gt;git remote&lt;/code&gt; called &amp;quot;example&amp;quot; that points to the original example.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;$ git remote add example https://github.com/cloudlets/nepho-example.git
+$ git remote -v
+example https://github.com/cloudlets/nepho-example.git (fetch)
+example https://github.com/cloudlets/nepho-example.git (push)
+origin  https://github.com/cloudlets/nepho-railsapp.git (fetch)
+origin  https://github.com/cloudlets/nepho-railsapp.git (push)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Start developing your cloudlet.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Periodically pull in updates from the example cloudlet as we make improvements.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;$ git pull example master
+From github.com:cloudlets/nepho-example
+ * branch            master     -&amp;gt; FETCH_HEAD
+Updating 2bb727d..729e139
+Fast-forward
+ README.md            |  26 ++++++++++++
+ data/.gitignore      |   2 +-
+ hooks/bootstrap      | 138 +++++++++++++++++++++++++++++++++++++-------------------------
+ hooks/configure      |  18 +++++---
+ hooks/deploy         |  15 ++++++-
+ 6 files changed, 136 insertions(+), 314 deletions(-)
+ create mode 100644 README.md
+ mode change 100644 =&amp;gt; 100755 hooks/bootstrap
+ mode change 100644 =&amp;gt; 100755 hooks/configure
+ mode change 100644 =&amp;gt; 100755 hooks/deploy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;If you&amp;#39;re concerned about our updates breaking your code, I recommend that instead of pulling directly into your &lt;code&gt;master&lt;/code&gt; branch, every time you pull you make a topic branch and pull into that first, then test.&lt;/p&gt;
+
+&lt;p&gt;Good resources for learning Git include &lt;a href=&quot;http://git-scm.com/book&quot;&gt;Pro Git&lt;/a&gt; and &lt;a href=&quot;http://gitready.com/&quot;&gt;Git Ready&lt;/a&gt;.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Simple RSpec tests for Puppet Modules</title>

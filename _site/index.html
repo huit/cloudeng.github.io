@@ -42,187 +42,61 @@
     <a href="/index.html">Cloud Eng: </a>
     
     
-    <a href="/howto,%20puppet/2013/10/28/simple-rspec-tests-for-puppet-modules.html">Simple RSpec tests for Puppet Modules</a>
+    <a href="/hacking/2013/10/29/developing-cloudlets.html">Developing Cloudlets</a>
 
 </h1>
 
-<div class="entry-content"><h3 id="toc_0">&quot;Test yo code!&quot;</h3>
+<div class="entry-content"><p>So, in our attempts to develop cloudlets (packages for <a href="https://github.com/huit/nepho">Nepho</a>) in some sort of reasonable fashion, we recommend a Git workflow that looks something like this:</p>
 
-<p>While this post isn&#39;t directly &quot;cloud&quot; related, to make our nodes and application patterns work,
-we rely heavily on configuration management tools like Puppet, Ansible, Chef, etc. 
-Since we rely so heavily on  automated configuration management, it seems like not
-only a good idea, but a requirement get as much testing done early and to automate it. Now, truth 
-be told, Ruby and rspec are brave new lands for me personally so I&#39;ve perhaps put out code
-<strong>may not</strong> have always been the best tested... I know it&#39;s unthinkable, but hey, good is better then perfect!
-Or as per the Iron Triangle -  &quot;Good, Cheap, Fast, pick two&quot; </p>
+<ol>
+<li><p>Fork the <a href="https://github.com/cloudlets/nepho-example">example cloudlet</a>.</p></li>
+<li><p>Rename your fork to something less generic, and check it out.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ git clone https://github.com/cloudlets/nepho-railsapp.git
+Cloning into &#39;nepho-railsapp&#39;...
+remote: Counting objects: 78, done.
+remote: Compressing objects: 100% (46/46), done.
+remote: Total 78 (delta 16), reused 74 (delta 12)
+Unpacking objects: 100% (78/78), done.
+Checking connectivity... done
+</code></pre></div></li>
+<li><p>Add a <code>git remote</code> called &quot;example&quot; that points to the original example.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ git remote add example https://github.com/cloudlets/nepho-example.git
+$ git remote -v
+example https://github.com/cloudlets/nepho-example.git (fetch)
+example https://github.com/cloudlets/nepho-example.git (push)
+origin  https://github.com/cloudlets/nepho-railsapp.git (fetch)
+origin  https://github.com/cloudlets/nepho-railsapp.git (push)
+</code></pre></div></li>
+<li><p>Start developing your cloudlet.</p></li>
+<li><p>Periodically pull in updates from the example cloudlet as we make improvements.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ git pull example master
+From github.com:cloudlets/nepho-example
+ * branch            master     -&gt; FETCH_HEAD
+Updating 2bb727d..729e139
+Fast-forward
+ README.md            |  26 ++++++++++++
+ data/.gitignore      |   2 +-
+ hooks/bootstrap      | 138 +++++++++++++++++++++++++++++++++++++-------------------------
+ hooks/configure      |  18 +++++---
+ hooks/deploy         |  15 ++++++-
+ 6 files changed, 136 insertions(+), 314 deletions(-)
+ create mode 100644 README.md
+ mode change 100644 =&gt; 100755 hooks/bootstrap
+ mode change 100644 =&gt; 100755 hooks/configure
+ mode change 100644 =&gt; 100755 hooks/deploy
+</code></pre></div></li>
+</ol>
 
-<p>I spent part of this weekend hacking around on rspec-puppet, configuring some basic tests,
-and hooking the github repo into <a href="http://travis-ci.org">travis-ci.</a> While there are lots of 
-great blog posts out there on <strong>how</strong> to do it, I felt pretty discombobulated by all the
-copies of Rakefile, gemfile and spec_helper.rb there were running around, and found myself
-working in circles. Hopeful this post will help someone whose just starting our with Ruby and
-rspec/rspec-puppet testing and make things a little clearer. </p>
+<p>If you&#39;re concerned about our updates breaking your code, I recommend that instead of pulling directly into your <code>master</code> branch, every time you pull you make a topic branch and pull into that first, then test.</p>
 
-<p>I Decided to start with a module I wrote to deploy and manage <a href="https://github.com/huit/puppet-splunk">Splunk</a> which
-while still in progress I thought would be a decent, simple place to start. </p>
-
-<h3 id="toc_1">&quot;Why Test?&quot;</h3>
-
-<p>You might find yourself saying &quot;I can run &#39;puppet apply --verbose&#39; and &#39;puppet validate parser&#39;  as well as the next guy..
-why bother with all the fancy tests??!&quot;  to which I reply - &quot;Badges... we need Badges&quot; 
-<img src="/assets/images/travis-ci-passing-badge.png" alt="Build Passing!">
-How awesome is it to know only know that a Module or project your may want to use.. works??! 
-Pretty darn awesome.  </p>
-
-<p>Although badges are awesome, you might not need no stinking badges... <strong>sigh</strong> as your
-modules get more and more complex, it becomes really useful to have some testing.  For a 
-while now, I&#39;ve been using &#39;puppet apply --verbose&#39;, &#39;puppet agent --test&#39;, &#39;puppet validate parser&#39;
-tests in the <MODULE>/tests directory, which worked ok for a while. Then I discovered Vagrant
-and started spinning up vagrant boxes of different flavors to run tests against, which was/IS awesome
-but it&#39;s also a pain to keep spinning boxes. It also takes <strong>TIME</strong> something that I never have enough of.</p>
-
-<p>Automating your tests gives you the ability to pass parameters, Facter Facts,  and much more
-in a nice, fast, reusable format. I found a presentation by <a href="http://vstone.eu/talks/puppet-module-testing/">Jan Vansteenkiste</a>
-About this where he hits the nail on the head!</p>
-
-<h3 id="toc_2">&quot;The How&quot;</h3>
-
-<p>I spend a good amount of time figuring out the &quot;how&quot; of getting rspec-puppet working. in
-My case, I had so many different versions of the base files, it was starting to make my head spin.
-Let me save you a bunch of time. Use the <a href="https://github.com/puppetlabs/puppetlabs_spec_helper">Puppet Labs Sec Helper Gem</a>
-This will save you a lot of time and Ruby frustration. You may find the <a href="http://puppetlabs.com/blog/the-next-generation-of-puppet-module-testing">Puppet Labs Post about the spec_helper gem useful!</a>
-One of the really useful features of the puppetlabs_spec_helper gem is it&#39;s ability to pull in your dependency modules!</p>
-
-<p>First install the Gem&#39;s you&#39;ll need.  I found the easiest way to do this was with <a href="http://bundler.io/">bundler.</a> 
-Set up a Gemfile at the root of your module: </p>
-
-<p>Example Gemfile
-```ruby
-source &#39;<a href="https://rubygems.org">https://rubygems.org</a>&#39;</p>
-
-<p>if ENV.key?(&#39;PUPPET_VERSION&#39;)
-  puppetversion = &quot;= #{ENV[&#39;PUPPET_VERSION&#39;]}&quot;
-else
-  puppetversion = [&#39;&gt;= 2.7&#39;]
-end</p>
-
-<p>gem &#39;rake&#39;
-gem &#39;puppet-lint&#39;
-gem &#39;rspec-puppet&#39;
-gem &#39;puppetlabs_spec_helper&#39;
-gem &#39;puppet&#39;, puppetversion
-```</p>
-
-<p>Then using bundler just do a &#39;bundle install&#39; to get all the gems you&#39;ll need for testing!</p>
-
-<p>Next setup your spec folders for testing, an easy way to do this is by running &#39; rspec-puppet-init&#39;
-one word of caution though, to get puppetlabs_spec_helper working the way you want, you&#39;ll need
-to clean our the &#39;spec/fixtures/modules/<name>&#39; directory of symlinks and delete the <modulename> 
-directory.  The puppetlabs_spec_helper gem will install and remove the directory and links for you, and 
-fail if the links and directory already exist. </p>
-<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="o">[</span>alaric@dhcp-128-103-62-80 huit-test<span class="o">]</span><span class="nv">$ </span>rspec-puppet-init
- + spec/classes/
- + spec/defines/
- + spec/functions/
- + spec/hosts/
- + spec/fixtures/
- + spec/fixtures/manifests/
- + spec/fixtures/modules/
- + spec/fixtures/modules/test/
- + spec/fixtures/manifests/site.pp
- + spec/fixtures/modules/test/manifests
-!! spec/spec_helper.rb already exists and differs from template
- + Rakefile
-</code></pre></div>
-<p>You can see from my test, it failed on spec_helper.rb since it already existed, don&#39;t
-worry about it, we are going to update that bad boy in just a moment :) </p>
-
-<p>Now lets set up our core config files. </p>
-
-<p>First, our Rakefile in the root of the module. puppetlabs_spec_helper lets us create a really 
-simple Rakefile! For those of us with little to no Ruby skills.. this is quite nice. </p>
-<div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;rubygems&#39;</span>
-<span class="nb">require</span> <span class="s1">&#39;puppetlabs_spec_helper/rake_tasks&#39;</span>
-
-<span class="n">task</span> <span class="ss">:default</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:spec</span><span class="p">,</span> <span class="ss">:lint</span><span class="o">]</span>
-</code></pre></div>
-<p>Next we&#39;ll set up .travis.yml in the root of the module. </p>
-<div class="highlight"><pre><code class="yaml language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">rvm</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.8.7</span>
-<span class="l-Scalar-Plain">bundler_args</span><span class="p-Indicator">:</span> <span class="s">&#39;&#39;</span>
-<span class="l-Scalar-Plain">notifications</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">email</span><span class="p-Indicator">:</span>
-    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">me@example.com</span>
-<span class="l-Scalar-Plain">env</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">PUPPET_VERSION=3.3.1</span>
-</code></pre></div>
-<p>You&#39;ll also want a  .fixtures.yml file so that puppetlabs_spec_helper can pull in any dependancies  you might need. </p>
-<div class="highlight"><pre><code class="yaml language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">fixtures</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">repositories</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">stdlib</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">git://github.com/puppetlabs/puppetlabs-stdlib.git</span>
-    <span class="l-Scalar-Plain">initfile</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">git://github.com/puppetlabs/puppetlabs-inifile.git</span>
-  <span class="l-Scalar-Plain">symlinks</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">splunk</span><span class="p-Indicator">:</span> <span class="s">&quot;#{source_dir}&quot;</span>
-</code></pre></div>
-<p>So in the root directory of your module, you should  have a Gemfile, Rakefile,  .fixtures.yml, and .travis.yml
-file. </p>
-
-<p>Now we can set up our spec_helper.rb file in the spec directory of your module. This is where puppetlabs_spec_helper
-really jumped out as awesome.  It let me just have a single line spec_herlper.rb! </p>
-<div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;puppetlabs_spec_helper/module_spec_helper&#39;</span>
-</code></pre></div>
-<p>Nice, simple, and clean. </p>
-
-<p>Lastly, you can create a simple test! In my case I created a really simple test just to ensure 
-that my module loaded, and ran puppet-lint against my code.  Put your tests in the directory 
-that matches the type of object your testing, in my case I was testing the Splunk class, so created a test
-called  &#39;puppet-splunk/spec/classes/splunk_spec.rb&#39;. </p>
-<div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;spec_helper&#39;</span>
-
-<span class="n">describe</span> <span class="s1">&#39;splunk&#39;</span><span class="p">,</span> <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="ss">:class</span> <span class="k">do</span>
-
-  <span class="n">describe</span> <span class="s2">&quot;Splunk class with no parameters, basic test&quot;</span> <span class="k">do</span>
-    <span class="n">let</span><span class="p">(</span><span class="ss">:params</span><span class="p">)</span> <span class="p">{</span> <span class="p">{</span> <span class="p">}</span> <span class="p">}</span>
-
-      <span class="n">it</span> <span class="p">{</span>
-        <span class="n">should</span> <span class="n">contain_package</span><span class="p">(</span><span class="s1">&#39;splunkforwarder&#39;</span><span class="p">)</span>
-        <span class="n">should</span> <span class="n">contain_service</span><span class="p">(</span><span class="s1">&#39;splunk&#39;</span><span class="p">)</span>
-      <span class="p">}</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-<h3 id="toc_3">Done and Done</h3>
-
-<p>So thats pretty much it! After much hand wringing, I was able to get some simple tests working. 
-In addition to being able to integrate this with something like travis-ci, this also allows you to
-run things like puppet-lint tests quickly over all of your classes in a module without having to set up 
-a git pre-commit hook. </p>
-
-<p>Check out &#39;rake help&#39; and &#39;rake lint&#39; from the root of your module! Pretty awesome stuff!</p>
-<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="o">[</span>alaric@dhcp-128-103-62-80 puppet-splunk<span class="o">]</span><span class="nv">$ </span>rake <span class="nb">help</span>
-rake build            <span class="c"># Build puppet module package</span>
-rake clean            <span class="c"># Clean a built module package</span>
-rake coverage         <span class="c"># Generate code coverage information</span>
-rake <span class="nb">help</span>             <span class="c"># Display the list of available rake tasks</span>
-rake lint             <span class="c"># Check puppet manifests with puppet-lint</span>
-rake spec             <span class="c"># Run spec tests in a clean fixtures directory</span>
-rake spec_clean       <span class="c"># Clean up the fixtures directory</span>
-rake spec_prep        <span class="c"># Create the fixtures directory</span>
-rake spec_standalone  <span class="c"># Run spec tests on an existing fixtures directory</span>
-</code></pre></div>
-<h4 id="toc_4">Useful links and Citations</h4>
-
-<p><a href="http://puppetlabs.com/blog/the-next-generation-of-puppet-module-testing">http://puppetlabs.com/blog/the-next-generation-of-puppet-module-testing</a>
-<a href="https://github.com/puppetlabs/puppetlabs_spec_helper">https://github.com/puppetlabs/puppetlabs_spec_helper</a>
-<a href="http://puppetlabs.com/blog/testing-modules-in-the-puppet-forge">http://puppetlabs.com/blog/testing-modules-in-the-puppet-forge</a>
-<a href="http://bombasticmonkey.com/2012/03/02/automatically-test-your-puppet-modules-with-travis-ci/">http://bombasticmonkey.com/2012/03/02/automatically-test-your-puppet-modules-with-travis-ci/</a>
-<a href="https://github.com/vStone/puppet-testing-example">https://github.com/vStone/puppet-testing-example</a></p>
-
-<p><a href="https://github.com/tfhartmann">@tfhartmann</a></p>
+<p>Good resources for learning Git include <a href="http://git-scm.com/book">Pro Git</a> and <a href="http://gitready.com/">Git Ready</a>.</p>
 </div>
 
 <p></div></p>
 
 <ul class="posts">
+  
+    <li><span>29 Oct 2013</span> &raquo; <a href="/hacking/2013/10/29/developing-cloudlets.html">Developing Cloudlets</a></li>
   
     <li><span>28 Oct 2013</span> &raquo; <a href="/howto,%20puppet/2013/10/28/simple-rspec-tests-for-puppet-modules.html">Simple RSpec tests for Puppet Modules</a></li>
   
