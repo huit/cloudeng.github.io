@@ -56,3 +56,10 @@ cloudfront_invalidate_root: true
 #       host_name: blog.example.com
 #       replace_key_prefix_with: some_new_path/
 #       http_redirect_code: 301
+routing_rules:
+  - condition:
+      key_prefix_equals: nepho
+    redirect:
+      host_name: pypi.python.org
+      replace_key_prefix_with: pypi/nepho
+      http_redirect_code: 301
