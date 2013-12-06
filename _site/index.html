@@ -29,7 +29,7 @@
       <a class="extra" href="/tags.html">Tags</a>
       <a class="extra" href="/about.html">About</a>
       <a class="extra" href="/projects.html">Projects</a>
-      <!---  <a class="extra" href="/the-big-board.html">The Big Board</a> --->
+      <a class="extra" href="/the-big-board.html">The Big Board</a>
     </div>
   
     
@@ -42,59 +42,28 @@
     <a href="/index.html">Cloud Eng: </a>
     
     
-    <a href="/hacking/2013/10/29/developing-cloudlets.html">Developing Cloudlets</a>
+    <a href="/software/2013/11/26/nepho-100-released.html">Nepho 1.0.0 released!</a>
 
 </h1>
 
-<div class="entry-content"><p>So, in our attempts to develop cloudlets (packages for <a href="https://github.com/huit/nepho">Nepho</a>) in some sort of reasonable fashion, we recommend a Git workflow that looks something like this:</p>
+<div class="entry-content"><p>The HUIT Cloud Engineering team is proud to announce the release of <a href="https://pypi.python.org/pypi/nepho">nepho 1.0.0</a>!</p>
 
-<ol>
-<li><p>Fork the <a href="https://github.com/cloudlets/nepho-example">example cloudlet</a>.</p></li>
-<li><p>Rename your fork to something less generic, and check it out.</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">$ git clone https://github.com/cloudlets/nepho-railsapp.git
-Cloning into &#39;nepho-railsapp&#39;...
-remote: Counting objects: 78, done.
-remote: Compressing objects: 100% (46/46), done.
-remote: Total 78 (delta 16), reused 74 (delta 12)
-Unpacking objects: 100% (78/78), done.
-Checking connectivity... done
-</code></pre></div></li>
-<li><p>Add a <code>git remote</code> called &quot;example&quot; that points to the original example.</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">$ git remote add example https://github.com/cloudlets/nepho-example.git
-$ git remote -v
-example https://github.com/cloudlets/nepho-example.git (fetch)
-example https://github.com/cloudlets/nepho-example.git (push)
-origin  https://github.com/cloudlets/nepho-railsapp.git (fetch)
-origin  https://github.com/cloudlets/nepho-railsapp.git (push)
-</code></pre></div></li>
-<li><p>Start developing your cloudlet.</p></li>
-<li><p>Periodically pull in updates from the example cloudlet as we make improvements.</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">$ git pull example master
-From github.com:cloudlets/nepho-example
- * branch            master     -&gt; FETCH_HEAD
-Updating 2bb727d..729e139
-Fast-forward
- README.md            |  26 ++++++++++++
- data/.gitignore      |   2 +-
- hooks/bootstrap      | 138 +++++++++++++++++++++++++++++++++++++-------------------------
- hooks/configure      |  18 +++++---
- hooks/deploy         |  15 ++++++-
- 6 files changed, 136 insertions(+), 314 deletions(-)
- create mode 100644 README.md
- mode change 100644 =&gt; 100755 hooks/bootstrap
- mode change 100644 =&gt; 100755 hooks/configure
- mode change 100644 =&gt; 100755 hooks/deploy
-</code></pre></div></li>
-</ol>
+<p>Nepho is a command-line tool that orchestrates the creation of complete working application stacks on virtual infrastructure. Initially targeting Amazon Web Services as well as Vagrant, Nepho abstracts datacenter creation, instance configuration, and application deployment into portable &quot;cloudlets&quot; that can be shared between developers and teams.</p>
 
-<p>If you&#39;re concerned about our updates breaking your code, I recommend that instead of pulling directly into your <code>master</code> branch, every time you pull you make a topic branch and pull into that first, then test.</p>
+<h3 id="toc_0">Why might you want to use Nepho?</h3>
 
-<p>Good resources for learning Git include <a href="http://git-scm.com/book">Pro Git</a> and <a href="http://gitready.com/">Git Ready</a>.</p>
+<p>Nepho simplifies and streamlines the process of developing, testing, and deploying applications in the cloud.  For example, let&#39;s say your team is testing out a new application (a commercial Java web application, perhaps, or a Ruby on Rails application written by a contractor).  The process of provisioning hardware in your production datacenter can be onerous and time-consuming; however, infrastructure-as-a-service (<a href="https://en.wikipedia.org/wiki/Infrastructure_as_a_service#Infrastructure_as_a_service_.28IaaS.29">IaaS</a>) cloud providers can offer a bewildering array of options in their attempts to provide as broad a range of services as possible.</p>
+
+<p>Here&#39;s where Nepho comes to the rescue.  Nepho&#39;s cloudlets enable subject matter experts to capture technical best practices in code so that you can easily reuse these best practices in your own projects.  You don&#39;t need to be a cloud infrastructure expert in order to deploy your application in the cloud; instead, you can use a task-appropriate cloudlet to automatically set up your cloud infrastructure for you.  The HUIT Cloud Engineering team maintains several cloudlets; you can use Nepho to search for and install cloudlets.</p>
+
+<p>Please take a moment to read our <a href="https://github.com/huit/nepho/wiki/Getting-Started">Getting Started</a> guide, and give Nepho a try!  The guide includes a link to our issue tracker; please let us know how we can make Nepho a better tool for you to use.</p>
 </div>
 
 <p></div></p>
 
 <ul class="posts">
+  
+    <li><span>26 Nov 2013</span> &raquo; <a href="/software/2013/11/26/nepho-100-released.html">Nepho 1.0.0 released!</a></li>
   
     <li><span>29 Oct 2013</span> &raquo; <a href="/hacking/2013/10/29/developing-cloudlets.html">Developing Cloudlets</a></li>
   

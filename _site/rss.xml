@@ -5,10 +5,29 @@
         <description>HUIT Cloud Engineering - HUIT Cloud Engineering</description>
         <link>http://cloudhacks.huit.harvard.edu</link>
         <link>http://cloudhacks.huit.harvard.edu</link>
-        <lastBuildDate>2013-11-01T15:31:21-04:00</lastBuildDate>
-        <pubDate>2013-11-01T15:31:21-04:00</pubDate>
+        <lastBuildDate>2013-12-06T16:34:28-05:00</lastBuildDate>
+        <pubDate>2013-12-06T16:34:28-05:00</pubDate>
         <ttl>1800</ttl>
 
+
+        <item>
+                <title>Nepho 1.0.0 released!</title>
+                <description>&lt;p&gt;The HUIT Cloud Engineering team is proud to announce the release of &lt;a href=&quot;https://pypi.python.org/pypi/nepho&quot;&gt;nepho 1.0.0&lt;/a&gt;!&lt;/p&gt;
+
+&lt;p&gt;Nepho is a command-line tool that orchestrates the creation of complete working application stacks on virtual infrastructure. Initially targeting Amazon Web Services as well as Vagrant, Nepho abstracts datacenter creation, instance configuration, and application deployment into portable &amp;quot;cloudlets&amp;quot; that can be shared between developers and teams.&lt;/p&gt;
+
+&lt;h3 id=&quot;toc_0&quot;&gt;Why might you want to use Nepho?&lt;/h3&gt;
+
+&lt;p&gt;Nepho simplifies and streamlines the process of developing, testing, and deploying applications in the cloud.  For example, let&amp;#39;s say your team is testing out a new application (a commercial Java web application, perhaps, or a Ruby on Rails application written by a contractor).  The process of provisioning hardware in your production datacenter can be onerous and time-consuming; however, infrastructure-as-a-service (&lt;a href=&quot;https://en.wikipedia.org/wiki/Infrastructure_as_a_service#Infrastructure_as_a_service_.28IaaS.29&quot;&gt;IaaS&lt;/a&gt;) cloud providers can offer a bewildering array of options in their attempts to provide as broad a range of services as possible.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;#39;s where Nepho comes to the rescue.  Nepho&amp;#39;s cloudlets enable subject matter experts to capture technical best practices in code so that you can easily reuse these best practices in your own projects.  You don&amp;#39;t need to be a cloud infrastructure expert in order to deploy your application in the cloud; instead, you can use a task-appropriate cloudlet to automatically set up your cloud infrastructure for you.  The HUIT Cloud Engineering team maintains several cloudlets; you can use Nepho to search for and install cloudlets.&lt;/p&gt;
+
+&lt;p&gt;Please take a moment to read our &lt;a href=&quot;https://github.com/huit/nepho/wiki/Getting-Started&quot;&gt;Getting Started&lt;/a&gt; guide, and give Nepho a try!  The guide includes a link to our issue tracker; please let us know how we can make Nepho a better tool for you to use.&lt;/p&gt;
+</description>
+                <link>http://cloudhacks.huit.harvard.edu/software/2013/11/26/nepho-100-released.html</link>
+                <guid>http://cloudhacks.huit.harvard.edu/software/2013/11/26/nepho-100-released</guid>
+                <pubDate>2013-11-26T00:00:00-05:00</pubDate>
+        </item>
 
         <item>
                 <title>Developing Cloudlets</title>
