@@ -4,7 +4,7 @@
  <title>HUIT Cloud Engineering</title>
  <link href="http://cloudhacks.huit.harvard.edu/" rel="self"/>
  <link href="http://cloudhacks.huit.harvard.edu"/>
- <updated>2013-12-06T16:34:28-05:00</updated>
+ <updated>2013-12-13T10:22:53-05:00</updated>
  <id>http://cloudhacks.huit.harvard.edu</id>
  <author>
    <name>HUIT Cloud Engineering</name>
@@ -90,78 +90,44 @@ Fast-forward
    <id>http://cloudhacks.huit.harvard.edu/howto,%20puppet/2013/10/28/simple-rspec-tests-for-puppet-modules</id>
    <content type="html">&lt;h3 id=&quot;toc_0&quot;&gt;&amp;quot;Test yo code!&amp;quot;&lt;/h3&gt;
 
-&lt;p&gt;While this post isn&amp;#39;t directly &amp;quot;cloud&amp;quot; related, to make our nodes and application patterns work,
-we rely heavily on configuration management tools like Puppet, Ansible, Chef, etc. 
-Since we rely so heavily on  automated configuration management, it seems like not
-only a good idea, but a requirement get as much testing done early and to automate it. Now, truth 
-be told, Ruby and rspec are brave new lands for me personally so I&amp;#39;ve perhaps put out code
-&lt;strong&gt;may not&lt;/strong&gt; have always been the best tested... I know it&amp;#39;s unthinkable, but hey, good is better then perfect!
-Or as per the Iron Triangle -  &amp;quot;Good, Cheap, Fast, pick two&amp;quot; &lt;/p&gt;
+&lt;p&gt;While this post isn&amp;#39;t directly &amp;quot;cloud&amp;quot; related, to make our nodes and application patterns work, we rely heavily on configuration management tools like Puppet, Ansible, Chef, etc.  Since we rely so heavily on  automated configuration management, it seems like not only a good idea, but a requirement get as much testing done early and to automate it. Now, truth be told, Ruby and rspec are brave new lands for me personally so I&amp;#39;ve perhaps put out code &lt;strong&gt;may not&lt;/strong&gt; have always been the best tested... I know it&amp;#39;s unthinkable, but hey, good is better then perfect!  Or as per the Iron Triangle -  &amp;quot;Good, Cheap, Fast, pick two&amp;quot; &lt;/p&gt;
 
-&lt;p&gt;I spent part of this weekend hacking around on rspec-puppet, configuring some basic tests,
-and hooking the github repo into &lt;a href=&quot;http://travis-ci.org&quot;&gt;travis-ci.&lt;/a&gt; While there are lots of 
-great blog posts out there on &lt;strong&gt;how&lt;/strong&gt; to do it, I felt pretty discombobulated by all the
-copies of Rakefile, gemfile and spec_helper.rb there were running around, and found myself
-working in circles. Hopeful this post will help someone whose just starting our with Ruby and
-rspec/rspec-puppet testing and make things a little clearer. &lt;/p&gt;
+&lt;p&gt;I spent part of this weekend hacking around on rspec-puppet, configuring some basic tests, and hooking the github repo into &lt;a href=&quot;http://travis-ci.org&quot;&gt;travis-ci.&lt;/a&gt; While there are lots of great blog posts out there on &lt;strong&gt;how&lt;/strong&gt; to do it, I felt pretty discombobulated by all the copies of Rakefile, gemfile and spec_helper.rb there were running around, and found myself working in circles. Hopeful this post will help someone whose just starting our with Ruby and rspec/rspec-puppet testing and make things a little clearer. &lt;/p&gt;
 
-&lt;p&gt;I Decided to start with a module I wrote to deploy and manage &lt;a href=&quot;https://github.com/huit/puppet-splunk&quot;&gt;Splunk&lt;/a&gt; which
-while still in progress I thought would be a decent, simple place to start. &lt;/p&gt;
+&lt;p&gt;I Decided to start with a module I wrote to deploy and manage &lt;a href=&quot;https://github.com/huit/puppet-splunk&quot;&gt;Splunk&lt;/a&gt; which while still in progress I thought would be a decent, simple place to start. &lt;/p&gt;
 
 &lt;h3 id=&quot;toc_1&quot;&gt;&amp;quot;Why Test?&amp;quot;&lt;/h3&gt;
 
-&lt;p&gt;You might find yourself saying &amp;quot;I can run &amp;#39;puppet apply --verbose&amp;#39; and &amp;#39;puppet validate parser&amp;#39;  as well as the next guy..
-why bother with all the fancy tests??!&amp;quot;  to which I reply - &amp;quot;Badges... we need Badges&amp;quot; 
-&lt;img src=&quot;/assets/images/travis-ci-passing-badge.png&quot; alt=&quot;Build Passing!&quot;&gt;
-How awesome is it to know only know that a Module or project your may want to use.. works??! 
-Pretty darn awesome.  &lt;/p&gt;
+&lt;p&gt;You might find yourself saying &amp;quot;I can run &lt;code&gt;puppet apply --verbose&lt;/code&gt; and &lt;code&gt;puppet validate parser&lt;/code&gt;  as well as the next guy..  why bother with all the fancy tests??!&amp;quot;  to which I reply - &amp;quot;Badges... we need Badges&amp;quot; &lt;img src=&quot;/assets/images/travis-ci-passing-badge.png&quot; alt=&quot;Build Passing!&quot;&gt; How awesome is it to know only know that a Module or project your may want to use.. works??!  Pretty darn awesome.  &lt;/p&gt;
 
-&lt;p&gt;Although badges are awesome, you might not need no stinking badges... &lt;strong&gt;sigh&lt;/strong&gt; as your
-modules get more and more complex, it becomes really useful to have some testing.  For a 
-while now, I&amp;#39;ve been using &amp;#39;puppet apply --verbose&amp;#39;, &amp;#39;puppet agent --test&amp;#39;, &amp;#39;puppet validate parser&amp;#39;
-tests in the &lt;MODULE&gt;/tests directory, which worked ok for a while. Then I discovered Vagrant
-and started spinning up vagrant boxes of different flavors to run tests against, which was/IS awesome
-but it&amp;#39;s also a pain to keep spinning boxes. It also takes &lt;strong&gt;TIME&lt;/strong&gt; something that I never have enough of.&lt;/p&gt;
+&lt;p&gt;Although badges are awesome, you might not need no stinking badges... &lt;strong&gt;sigh&lt;/strong&gt; as your modules get more and more complex, it becomes really useful to have some testing.  For a while now, I&amp;#39;ve been using &amp;#39;puppet apply --verbose&amp;#39;, &amp;#39;puppet agent --test&amp;#39;, &amp;#39;puppet validate parser&amp;#39; tests in the &lt;MODULE&gt;/tests directory, which worked ok for a while. Then I discovered Vagrant and started spinning up vagrant boxes of different flavors to run tests against, which was/IS awesome but it&amp;#39;s also a pain to keep spinning boxes. It also takes &lt;strong&gt;TIME&lt;/strong&gt; something that I never have enough of.&lt;/p&gt;
 
-&lt;p&gt;Automating your tests gives you the ability to pass parameters, Facter Facts,  and much more
-in a nice, fast, reusable format. I found a presentation by &lt;a href=&quot;http://vstone.eu/talks/puppet-module-testing/&quot;&gt;Jan Vansteenkiste&lt;/a&gt;
-About this where he hits the nail on the head!&lt;/p&gt;
+&lt;p&gt;Automating your tests gives you the ability to pass parameters, Facter Facts,  and much more in a nice, fast, reusable format. I found a presentation by &lt;a href=&quot;http://vstone.eu/talks/puppet-module-testing/&quot;&gt;Jan Vansteenkiste&lt;/a&gt; about this where he hits the nail on the head!&lt;/p&gt;
 
 &lt;h3 id=&quot;toc_2&quot;&gt;&amp;quot;The How&amp;quot;&lt;/h3&gt;
 
-&lt;p&gt;I spend a good amount of time figuring out the &amp;quot;how&amp;quot; of getting rspec-puppet working. in
-My case, I had so many different versions of the base files, it was starting to make my head spin.
-Let me save you a bunch of time. Use the &lt;a href=&quot;https://github.com/puppetlabs/puppetlabs_spec_helper&quot;&gt;Puppet Labs Sec Helper Gem&lt;/a&gt;
-This will save you a lot of time and Ruby frustration. You may find the &lt;a href=&quot;http://puppetlabs.com/blog/the-next-generation-of-puppet-module-testing&quot;&gt;Puppet Labs Post about the spec_helper gem useful!&lt;/a&gt;
-One of the really useful features of the puppetlabs_spec_helper gem is it&amp;#39;s ability to pull in your dependency modules!&lt;/p&gt;
+&lt;p&gt;I spend a good amount of time figuring out the &amp;quot;how&amp;quot; of getting rspec-puppet working. in My case, I had so many different versions of the base files, it was starting to make my head spin.  Let me save you a bunch of time. Use the &lt;a href=&quot;https://github.com/puppetlabs/puppetlabs_spec_helper&quot;&gt;Puppet Labs Sec Helper Gem&lt;/a&gt; This will save you a lot of time and Ruby frustration. You may find the &lt;a href=&quot;http://puppetlabs.com/blog/the-next-generation-of-puppet-module-testing&quot;&gt;Puppet Labs Post about the spec_helper gem useful!&lt;/a&gt; One of the really useful features of the puppetlabs_spec_helper gem is it&amp;#39;s ability to pull in your dependency modules!&lt;/p&gt;
 
-&lt;p&gt;First install the Gem&amp;#39;s you&amp;#39;ll need.  I found the easiest way to do this was with &lt;a href=&quot;http://bundler.io/&quot;&gt;bundler.&lt;/a&gt; 
-Set up a Gemfile at the root of your module: &lt;/p&gt;
+&lt;p&gt;First install the Gems you&amp;#39;ll need.  I found the easiest way to do this was with &lt;a href=&quot;http://bundler.io/&quot;&gt;bundler.&lt;/a&gt; Set up a Gemfile at the root of your module: &lt;/p&gt;
 
-&lt;p&gt;Example Gemfile
-```ruby
-source &amp;#39;&lt;a href=&quot;https://rubygems.org&quot;&gt;https://rubygems.org&lt;/a&gt;&amp;#39;&lt;/p&gt;
+&lt;p&gt;Example Gemfile:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://rubygems.org&amp;#39;&lt;/span&gt;
 
-&lt;p&gt;if ENV.key?(&amp;#39;PUPPET_VERSION&amp;#39;)
-  puppetversion = &amp;quot;= #{ENV[&amp;#39;PUPPET_VERSION&amp;#39;]}&amp;quot;
-else
-  puppetversion = [&amp;#39;&amp;gt;= 2.7&amp;#39;]
-end&lt;/p&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;PUPPET_VERSION&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;puppetversion&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;= &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;PUPPET_VERSION&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;puppetversion&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;gt;= 2.7&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 
-&lt;p&gt;gem &amp;#39;rake&amp;#39;
-gem &amp;#39;puppet-lint&amp;#39;
-gem &amp;#39;rspec-puppet&amp;#39;
-gem &amp;#39;puppetlabs_spec_helper&amp;#39;
-gem &amp;#39;puppet&amp;#39;, puppetversion
-```&lt;/p&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;rake&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;puppet-lint&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;rspec-puppet&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;puppetlabs_spec_helper&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;puppet&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;puppetversion&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then using bundler just do a &lt;code&gt;bundle install&lt;/code&gt; to get all the gems you&amp;#39;ll need for testing!&lt;/p&gt;
 
-&lt;p&gt;Then using bundler just do a &amp;#39;bundle install&amp;#39; to get all the gems you&amp;#39;ll need for testing!&lt;/p&gt;
-
-&lt;p&gt;Next setup your spec folders for testing, an easy way to do this is by running &amp;#39; rspec-puppet-init&amp;#39;
-one word of caution though, to get puppetlabs_spec_helper working the way you want, you&amp;#39;ll need
-to clean our the &amp;#39;spec/fixtures/modules/&lt;name&gt;&amp;#39; directory of symlinks and delete the &lt;modulename&gt; 
-directory.  The puppetlabs_spec_helper gem will install and remove the directory and links for you, and 
-fail if the links and directory already exist. &lt;/p&gt;
+&lt;p&gt;Next setup your spec folders for testing, an easy way to do this is by running &lt;code&gt;rspec-puppet-init&lt;/code&gt;. One word of caution though, to get puppetlabs_spec_helper working the way you want, you&amp;#39;ll need to clean our the &amp;#39;spec/fixtures/modules/&lt;name&gt;&amp;#39; directory of symlinks and delete the &lt;modulename&gt; directory.  The puppetlabs_spec_helper gem will install and remove the directory and links for you, and fail if the links and directory already exist. &lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;alaric@dhcp-128-103-62-80 huit-test&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rspec-puppet-init
  + spec/classes/
  + spec/defines/
@@ -176,13 +142,11 @@ fail if the links and directory already exist. &lt;/p&gt;
 !! spec/spec_helper.rb already exists and differs from template
  + Rakefile
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;You can see from my test, it failed on spec_helper.rb since it already existed, don&amp;#39;t
-worry about it, we are going to update that bad boy in just a moment :) &lt;/p&gt;
+&lt;p&gt;You can see from my test, it failed on spec_helper.rb since it already existed, don&amp;#39;t worry about it, we are going to update that bad boy in just a moment :) &lt;/p&gt;
 
-&lt;p&gt;Now lets set up our core config files. &lt;/p&gt;
+&lt;p&gt;Now let&amp;#39;s set up our core config files. &lt;/p&gt;
 
-&lt;p&gt;First, our Rakefile in the root of the module. puppetlabs_spec_helper lets us create a really 
-simple Rakefile! For those of us with little to no Ruby skills.. this is quite nice. &lt;/p&gt;
+&lt;p&gt;First, our Rakefile in the root of the module. puppetlabs_spec_helper lets us create a really simple Rakefile! For those of us with little to no Ruby skills.. this is quite nice. &lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;rubygems&amp;#39;&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;puppetlabs_spec_helper/rake_tasks&amp;#39;&lt;/span&gt;
 
@@ -205,19 +169,14 @@ simple Rakefile! For those of us with little to no Ruby skills.. this is quite n
   &lt;span class=&quot;l-Scalar-Plain&quot;&gt;symlinks&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;l-Scalar-Plain&quot;&gt;splunk&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;#{source_dir}&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;So in the root directory of your module, you should  have a Gemfile, Rakefile,  .fixtures.yml, and .travis.yml
-file. &lt;/p&gt;
+&lt;p&gt;So in the root directory of your module, you should have a Gemfile, a Rakefile, a .fixtures.yml, and a .travis.yml file. &lt;/p&gt;
 
-&lt;p&gt;Now we can set up our spec_helper.rb file in the spec directory of your module. This is where puppetlabs_spec_helper
-really jumped out as awesome.  It let me just have a single line spec_herlper.rb! &lt;/p&gt;
+&lt;p&gt;Now we can set up our spec_helper.rb file in the spec directory of your module. This is where puppetlabs_spec_helper really jumped out as awesome.  It let me just have a single-line spec_helper.rb! &lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;puppetlabs_spec_helper/module_spec_helper&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Nice, simple, and clean. &lt;/p&gt;
 
-&lt;p&gt;Lastly, you can create a simple test! In my case I created a really simple test just to ensure 
-that my module loaded, and ran puppet-lint against my code.  Put your tests in the directory 
-that matches the type of object your testing, in my case I was testing the Splunk class, so created a test
-called  &amp;#39;puppet-splunk/spec/classes/splunk_spec.rb&amp;#39;. &lt;/p&gt;
+&lt;p&gt;Lastly, you can create a simple test! In my case I created a really simple test just to ensure that my module loaded, and ran puppet-lint against my code.  Put your tests in the directory that matches the type of object your testing, in my case I was testing the Splunk class, so created a test called  &amp;#39;puppet-splunk/spec/classes/splunk_spec.rb&amp;#39;. &lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;spec_helper&amp;#39;&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;splunk&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
@@ -253,11 +212,13 @@ rake spec_standalone  &lt;span class=&quot;c&quot;&gt;# Run spec tests on an exi
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h4 id=&quot;toc_4&quot;&gt;Useful links and Citations&lt;/h4&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://puppetlabs.com/blog/the-next-generation-of-puppet-module-testing&quot;&gt;http://puppetlabs.com/blog/the-next-generation-of-puppet-module-testing&lt;/a&gt;
-&lt;a href=&quot;https://github.com/puppetlabs/puppetlabs_spec_helper&quot;&gt;https://github.com/puppetlabs/puppetlabs_spec_helper&lt;/a&gt;
-&lt;a href=&quot;http://puppetlabs.com/blog/testing-modules-in-the-puppet-forge&quot;&gt;http://puppetlabs.com/blog/testing-modules-in-the-puppet-forge&lt;/a&gt;
-&lt;a href=&quot;http://bombasticmonkey.com/2012/03/02/automatically-test-your-puppet-modules-with-travis-ci/&quot;&gt;http://bombasticmonkey.com/2012/03/02/automatically-test-your-puppet-modules-with-travis-ci/&lt;/a&gt;
-&lt;a href=&quot;https://github.com/vStone/puppet-testing-example&quot;&gt;https://github.com/vStone/puppet-testing-example&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://puppetlabs.com/blog/the-next-generation-of-puppet-module-testing&quot;&gt;http://puppetlabs.com/blog/the-next-generation-of-puppet-module-testing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/puppetlabs/puppetlabs_spec_helper&quot;&gt;https://github.com/puppetlabs/puppetlabs_spec_helper&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://puppetlabs.com/blog/testing-modules-in-the-puppet-forge&quot;&gt;http://puppetlabs.com/blog/testing-modules-in-the-puppet-forge&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://bombasticmonkey.com/2012/03/02/automatically-test-your-puppet-modules-with-travis-ci/&quot;&gt;http://bombasticmonkey.com/2012/03/02/automatically-test-your-puppet-modules-with-travis-ci/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/vStone/puppet-testing-example&quot;&gt;https://github.com/vStone/puppet-testing-example&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://github.com/tfhartmann&quot;&gt;@tfhartmann&lt;/a&gt;&lt;/p&gt;
 </content>

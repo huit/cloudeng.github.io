@@ -80,6 +80,7 @@ JB :
   rss_path : /rss.xml
   about_path : /about.html
   trello_path : /the-big-board.html
+  resources_path: /resources.html
   projects_path : /projects.html
 
   # Settings for comments helper

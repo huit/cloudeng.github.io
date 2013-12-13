@@ -11,6 +11,7 @@ http://cloudhacks.huit.harvard.edu/index.html
 http://cloudhacks.huit.harvard.edu/nepho.html
 http://cloudhacks.huit.harvard.edu/pages.html
 http://cloudhacks.huit.harvard.edu/projects.html
+http://cloudhacks.huit.harvard.edu/resources.html
 http://cloudhacks.huit.harvard.edu/rss.xml
 http://cloudhacks.huit.harvard.edu/sitemap.txt
 http://cloudhacks.huit.harvard.edu/tags.html
