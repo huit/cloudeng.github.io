@@ -8,13 +8,16 @@ http://cloudhacks.huit.harvard.edu/archive.html
 http://cloudhacks.huit.harvard.edu/atom.xml
 http://cloudhacks.huit.harvard.edu/categories.html
 http://cloudhacks.huit.harvard.edu/index.html
+http://cloudhacks.huit.harvard.edu/nepho.html
 http://cloudhacks.huit.harvard.edu/pages.html
 http://cloudhacks.huit.harvard.edu/projects.html
+http://cloudhacks.huit.harvard.edu/resources.html
 http://cloudhacks.huit.harvard.edu/rss.xml
 http://cloudhacks.huit.harvard.edu/sitemap.txt
 http://cloudhacks.huit.harvard.edu/tags.html
 http://cloudhacks.huit.harvard.edu/the-big-board.html
 
+http://cloudhacks.huit.harvard.edu/software/2013/11/26/nepho-100-released.html
 http://cloudhacks.huit.harvard.edu/hacking/2013/10/29/developing-cloudlets.html
 http://cloudhacks.huit.harvard.edu/howto,%20puppet/2013/10/28/simple-rspec-tests-for-puppet-modules.html
 http://cloudhacks.huit.harvard.edu/openstack/2013/10/24/openstack-meetup---whats-new-in-havana.html
