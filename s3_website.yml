@@ -2,7 +2,7 @@ s3_id: <%= ENV['S3_ID'] %>
 s3_secret: <%= ENV['S3_SECRET'] %>
 s3_bucket: cloudhacks.huit.harvard.edu
 s3_reduced_redundancy: true
-cloudfront_distribution_id: E22J6QQ8QPO74K
+cloudfront_distribution_id: E12OYXUHUIDBE1
 
 cloudfront_distribution_config:
    aliases:
