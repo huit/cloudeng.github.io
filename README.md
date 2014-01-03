@@ -5,6 +5,8 @@ This repo contains the "Cloud Hacks" blog of the Cloud Engineering Team within H
 
 - http://cloudhacks.huit.harvard.edu/
 
+The Jekyll README is [here](jekyll-README.md).
+
 All the actual content is in the `gh-pages` branch, to be consistent with GitHub's [automatic page generation](https://help.github.com/articles/creating-pages-with-the-automatic-generator).
 
 Info on building and updating the blog is, self-referentially, blogged about here:
