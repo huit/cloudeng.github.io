@@ -17,6 +17,7 @@ http://cloudhacks.huit.harvard.edu/sitemap.txt
 http://cloudhacks.huit.harvard.edu/tags.html
 http://cloudhacks.huit.harvard.edu/the-big-board.html
 
+http://cloudhacks.huit.harvard.edu/2014/01/05/vagrant-your-own-personal-cloud-provider.html
 http://cloudhacks.huit.harvard.edu/software/2013/11/26/nepho-100-released.html
 http://cloudhacks.huit.harvard.edu/hacking/2013/10/29/developing-cloudlets.html
 http://cloudhacks.huit.harvard.edu/howto,%20puppet/2013/10/28/simple-rspec-tests-for-puppet-modules.html
