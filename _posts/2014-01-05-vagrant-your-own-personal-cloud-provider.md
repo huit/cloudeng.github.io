@@ -18,19 +18,14 @@ Configuration and setup is done via the `Vagrantfile`, a ruby-syntax configurati
 A typical Vagrant session looks like this:
 
     $> vagrant init mybox http://(url to my).box
-    
-    $> vagrant up 
-     
+    $> vagrant up
     $> vagrant provision
-     
     $> vagrant ssh
-     
     $> vagrant halt
-     
     $> vagrant destroy
 
-Here we've created a basic template `Vagrantfile` that uses a specific disk image ( i.e. a vagrant "box" ). We then started `up` a VM using that disk image (this step will take a while, since ). The next step will `provision` the VM lby running any puppet or chef code that we may have specified in the 
-`Vagrantfile` (in our case nothing will happen). 
+Here we've created a basic template `Vagrantfile` that uses a specific disk image ( i.e. a vagrant "box" ). We then started `up` a VM using that disk image (this step will take a while, since ). The next step will `provision` the VM lby running any puppet or chef code that we may have specified in the
+`Vagrantfile` (in our case nothing will happen).
 
 Once up and provisioned, we can `ssh` into the VM; vagrant manages all the keys and sshd port details for us. Once done, we `halt` and then `destroy` the VM.
 
@@ -52,10 +47,10 @@ In addition to SSH terminal access, Amazon EC2 and OpenStack allow you to specif
 
 **Orchestration**: The `Vagrantfile` itself represents the spefication file for deploying and managing any number of VM and other resourcs within vagrant, while the hooks into puppet or chef allow you to further orchestrate the system and application configuration. The equivalent capability in Amazon Web Services is through [CloudFormation](http://aws.amazon.com/cloudformation/), and for OpenStack it's the emerging [Heat](https://wiki.openstack.org/wiki/Heat) service.
 
-## Examples 
+## Examples
 
-Here's a basic example of building a simple webserver and adding a basic 
-`index.html` file. This uses basic scripting for simplicity; more advanced setups would use a 
+Here's a basic example of building a simple webserver and adding a basic
+`index.html` file. This uses basic scripting for simplicity; more advanced setups would use a
 
 ### Vagrant
 
@@ -110,9 +105,9 @@ Using the newer AWS CLI tools, launch this "stack" using the command:
      aws cloudformation create-stack \
          --stack-name example \
          --parameters  ParameterKey=KeyName,ParameterValue=parrott \
-         --template-body "$(cat cf.json)" 
+         --template-body "$(cat cf.json)"
 
-where you've saved the following CloudFormation JSON template file as `cf.json` and you have replaced the SSH key name `parrott` with our own value as configured in Amazon EC2. 
+where you've saved the following CloudFormation JSON template file as `cf.json` and you have replaced the SSH key name `parrott` with our own value as configured in Amazon EC2.
 
 The template follows below. Note that because Amazon is a multi-tenant web-services environment instead of a local wrapper environment, this specification file tends to be _much_ longer and complicated.
 
@@ -159,7 +154,7 @@ The template follows below. Note that because Amazon is a multi-tenant web-servi
           "echo \"</body></html>\" >> $f\n",
 
           "/opt/aws/bin/cfn-signal -e $? '", { "Ref" : "WaitHandle" }, "'\n"
-        ]]}}        
+        ]]}}
       }
     },
 
@@ -205,7 +200,7 @@ The template follows below. Note that because Amazon is a multi-tenant web-servi
 
 ## Behold: The Power of Nepho!
 
-One issue with the configs above is that the _same_ script is duplicated in each orchestration file. Thus any change must be duplicated. Now let's add in Google Compte Engine, and add in another cloud provider, and a much more copmlex, multi-host environment, and pretty soom we've radically grown in complexity. If only we had a tool to reduce this complexity, and decouple the infrastructure setup from the system and application setup.
+One issue with the configs above is that the _same_ script is duplicated in each orchestration file. Thus any change must be duplicated. Now let's add in Google Compte Engine, and add in another cloud provider, and a much more complex, multi-host environment, and pretty soom we've radically grown in complexity. If only we had a tool to reduce this complexity, and decouple the infrastructure setup from the system and application setup.
 
 Enter [nepho](http://github.com/huit/nepho).
 
