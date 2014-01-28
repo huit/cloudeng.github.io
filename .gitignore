@@ -13,4 +13,6 @@ vendor
 node_modules
 *.swp
 _site/
+_site/*.xml
 .ruby-version
+Gemfile.lock
